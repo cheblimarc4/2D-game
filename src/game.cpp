@@ -4,13 +4,17 @@
  * Date: November 21, 2023
  * Description: Game class to deal with initialization and controller of 2D my game application.
  */
+#include <iostream>
 #include "game.h"
+#include "move.h"
+
 
 const float Game::SCENE_WIDTH = 800.0f;
 const float Game::SCENE_HEIGHT = 600.0f;
 const float Game::PLAYER_START_X = 400.0f;
 const float Game::PLAYER_START_Y = 300.0f;
 const float Game::RADIUS = 40.0f;
+const float Game::SPEED = 150.0f;
 
 Game::Game() {
     initWindow();
@@ -72,10 +76,11 @@ void Game::processInput() {
 /**
  * Function to update the position of the player
  */
-void Game::update() {
-    float x = player.getPosition().x;
-    float y = player.getPosition().y;
-    player.setPosition(x, y);
+void Game::update(sf::Time delta, sf::Shape &player) {
+    Coordinate playerPosition = {player.getPosition().x, player.getPosition().y};
+    Coordinate velocity = { SPEED, SPEED };
+    Coordinate newPosition = move(playerPosition, velocity, 0.001f * delta.asMilliseconds());
+    player.setPosition(newPosition.x, newPosition.y);
 }
 
 /**
@@ -92,8 +97,9 @@ void Game::render() {
  */
 int Game::run() {
     while (window.isOpen()) {
+        sf::Time delta = clock.restart();
         processInput();
-        update();
+        update(delta, player);
         render();
     }
     return 0;

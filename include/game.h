@@ -18,17 +18,19 @@ private:
     sf::Texture backgroundTexture;
     sf::Texture playerTexture;
     sf::CircleShape player;
+    sf::Clock clock;
 
     static const float SCENE_WIDTH;
     static const float SCENE_HEIGHT;
     static const float PLAYER_START_X;
     static const float PLAYER_START_Y;
     static const float RADIUS;
+    static const float SPEED;
 
     int initWindow();
     int initBackground();
     int initPlayer();
     void processInput();
-    void update();
+    void update(sf::Time delta, sf::Shape &player);
     void render();
 };
