@@ -13,6 +13,8 @@ add_executable(2D_game_assignment
         src/game.cpp
         src/move.cpp)
 
+
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 
 # Test suite sources
